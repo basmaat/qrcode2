@@ -39,20 +39,20 @@
 
     <v-content>
          <vueqrcode/>
-        <HelloWorld/>
+      
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+//import HelloWorld from './components/HelloWorld';
 import vueqrcode from './components/vueqrcode';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+   // HelloWorld,
     vueqrcode,
   },
 

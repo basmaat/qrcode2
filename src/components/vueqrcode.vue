@@ -1,30 +1,58 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="400">
-      <v-card-title>scan your QR code</v-card-title>
+    <v-stepper v-model="e6" vertical>
+      <v-stepper-header>
+        <v-stepper-step :complete="e6 > 1" step="1"></v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step :complete="e6 > 2" step="2"></v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step :complete="e6 > 3" step="3"></v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="4"></v-stepper-step>
+      </v-stepper-header>
+      <v-stepper-items>
+        <v-stepper-content step="1">Select the store
+          <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+          <v-btn color="primary" @click.native="e6 = 2">Continue</v-btn>
+          <v-btn flat>Cancel</v-btn>
+        </v-stepper-content>
 
-      <qrcode-stream @decode="onDecode" @init="onInit" />
+        <v-stepper-content step="2">Take a picture of your coworker
+          <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+          <v-btn color="primary" @click.native="e6 = 3">Continue</v-btn>
+          <v-btn flat>Cancel</v-btn>
+        </v-stepper-content>
 
-      <v-card-subtitle class="pb-0">
-        <v-list rounded>
-          <v-subheader>Scanned QR codes</v-subheader>
-          <v-list-item-group>
-            <v-list-item v-for="(scan) in results" :key="scan.scan">
-              {{scan.scan}}
-              <v-chip
-                class="ma-2"
-                color="green"
-                text-color="white"
-                close-icon="mdi-delete"
-                
-              >
-                <v-avatar left class="green darken-4">{{scan.count}}</v-avatar>Counts
-              </v-chip>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-card-subtitle>
-    </v-card>
+        <v-stepper-content step="3">Scan the area
+          <v-card color="grey lighten-1" class="mb-5" height="200px">
+            <qrcode-stream @decode="onDecode" @init="onInit" />
+          </v-card>
+          <v-btn color="primary" @click.native="e6 = 4">Continue</v-btn>
+          <v-btn flat>Cancel</v-btn>
+        </v-stepper-content>
+
+        <v-stepper-content step="4">Scan the items
+          <v-card color="grey lighten-1" class="mb-5" max-width="400" height="200px">
+            <qrcode-stream @decode="onDecode" @init="onInit" />
+            <v-card-subtitle class="pb-0">
+              <v-list rounded>
+                <v-subheader>Scanned QR codes</v-subheader>
+                <v-list-item-group>
+                  <v-list-item v-for="(scan) in results" :key="scan.scan">
+                    {{scan.scan}}
+                    <v-chip class="ma-2" color="green" text-color="white" close-icon="mdi-delete">
+                      <v-avatar left class="green darken-4">{{scan.count}}</v-avatar>Counts
+                    </v-chip>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-card-subtitle>
+          </v-card>
+          <v-btn color="primary" @click.native="e6 = 1">Continue</v-btn>
+          <v-btn flat>Cancel</v-btn>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
   </div>
 </template>
 
@@ -39,7 +67,8 @@ export default {
       // result: '',
       result: [],
       results: [],
-      error: ""
+      error: "",
+      e6: 1
     };
   },
 
@@ -51,10 +80,14 @@ export default {
       let bas = this.results.findIndex(x => x.scan === result);
 
       if (bas === -1) {
-        this.results.push({ id: this.results.length + 1 , scan: result, count: 1 });
+        this.results.push({
+          id: this.results.length + 1,
+          scan: result,
+          count: 1
+        });
       } else {
         this.results[bas].count = this.results[bas].count + 1;
-     //   console.log(this.results, "allready scanned");
+        //   console.log(this.results, "allready scanned");
       }
 
       //     this.result.push({scan: result, count: 1});
