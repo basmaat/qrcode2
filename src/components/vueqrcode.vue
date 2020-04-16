@@ -11,19 +11,22 @@
         <v-stepper-step step="4"></v-stepper-step>
       </v-stepper-header>
       <v-stepper-items>
-        <v-stepper-content step="1">Select the store
+        <v-stepper-content step="1">
+          Select the store
           <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
           <v-btn color="primary" @click.native="e6 = 2">Continue</v-btn>
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
-        <v-stepper-content step="2">Take a picture of your coworker
+        <v-stepper-content step="2">
+          Take a picture of your coworker
           <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
           <v-btn color="primary" @click.native="e6 = 3">Continue</v-btn>
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
-        <v-stepper-content step="3">Scan the area
+        <v-stepper-content step="3">
+          Scan the area
           <v-card color="grey lighten-1" class="mb-5" height="200px">
             <qrcode-stream @decode="onDecode" @init="onInit" />
           </v-card>
@@ -31,9 +34,12 @@
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
-        <v-stepper-content step="4">Scan the items
+        <v-stepper-content step="4">
+          Scan the items
           <v-card color="grey lighten-1" class="mb-5" max-width="400" height="200px">
             <qrcode-stream @decode="onDecode" @init="onInit" />
+          </v-card>
+          <v-card color="grey lighten-1" class="mb-5" max-width="400" height="200px">
             <v-card-subtitle class="pb-0">
               <v-list rounded>
                 <v-subheader>Scanned QR codes</v-subheader>
